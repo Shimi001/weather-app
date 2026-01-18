@@ -1,12 +1,10 @@
-import Logo from "./components/ui/Logo";
+import Header from "./components/layout/Header";
 import WeatherCard from "./components/weather";
 
 function App() {
   return (
     <>
-      <header>
-        <Logo />
-      </header>
+      <Header />
 
       <main>
         <WeatherCard />
