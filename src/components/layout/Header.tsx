@@ -2,7 +2,7 @@ import Logo from "../ui/Logo";
 
 function Header() {
   return (
-    <header>
+    <header className="p-6">
       <Logo />
     </header>
   );
