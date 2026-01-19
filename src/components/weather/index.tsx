@@ -3,7 +3,7 @@ import WeatherInfo from "./WeatherInfo";
 
 function WeatherCard() {
   return (
-    <div className="flex flex-col gap-8 w-full">
+    <div className="flex flex-col gap-12 w-full">
       <WeatherCircle />
       <WeatherInfo />
     </div>
