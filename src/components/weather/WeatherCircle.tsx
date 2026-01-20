@@ -1,6 +1,9 @@
+import NavArrows from "./NavArrows";
+
 function WeatherCircle() {
   return (
-    <div className="mx-auto">
+    <div className="mx-auto relative">
+      <NavArrows />
       <div className="bg-white w-64 h-64 rounded-full relative">
         {/* -translate-x-6 = 2 digits, -translate-x-3 = 1 digit */}
         <div className="absolute top-1/4 left-1/2 -translate-x-6 -translate-y-5">
