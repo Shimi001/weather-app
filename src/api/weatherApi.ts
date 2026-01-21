@@ -9,7 +9,7 @@ const fetchWeather = async (city: string): Promise<WeatherData> => {
   }
 
   const response = await fetch(
-    `${BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}`,
+    `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(city)}&days=3&aqi=no&alerts=no`,
   );
 
   if (!response.ok) {
