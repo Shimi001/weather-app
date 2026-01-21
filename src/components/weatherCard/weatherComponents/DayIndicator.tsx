@@ -1,4 +1,4 @@
-import { days } from "../../data/days";
+import { days } from "../../../data/days";
 
 function DayIndicator() {
   const currentDay = 0;

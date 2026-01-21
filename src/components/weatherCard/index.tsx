@@ -1,6 +1,6 @@
-import WeatherCircle from "./WeatherCircle";
-import WeatherInfo from "./WeatherInfo";
-import DayIndicator from "./DayIndicator";
+import WeatherCircle from "./weatherComponents/WeatherCircle";
+import WeatherInfo from "./weatherComponents/WeatherInfo";
+import DayIndicator from "./weatherComponents/DayIndicator";
 
 function WeatherCard() {
   return (
