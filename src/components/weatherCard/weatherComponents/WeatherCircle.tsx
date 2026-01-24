@@ -1,18 +1,35 @@
 import NavArrows from "./NavArrows";
-import { useWeather } from "../../../hooks/useWeather";
+import type WeatherData from "../../../types/weather";
 
-function WeatherCircle() {
-  const { data, isLoading, error } = useWeather("Vienna");
+interface WeatherCircleProps {
+  weatherData: WeatherData | null;
+  isLoading: boolean;
+  error: Error | null;
+  color: string;
+  symbol: string;
 
-  console.log("response body:", data);
-  console.log("loading condition:", isLoading);
-  console.log("error:", error);
+  onNext: () => void;
+  onPrev: () => void;
+}
 
+function WeatherCircle({
+  weatherData,
+  isLoading,
+  error,
+  color,
+  symbol,
+
+  onNext,
+  onPrev,
+}: WeatherCircleProps) {
   return (
     <div className="mx-auto relative">
-      <NavArrows />
-
-      <div className="bg-white w-64 h-64 rounded-full relative">
+      <NavArrows onNext={onNext} onPrev={onPrev} />
+      <div
+        className={`text-white w-64 h-64 rounded-full relative ${
+          !error ? color : "bg-white"
+        }`}
+      >
         {error ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-red-500 p-4 text-center animate-pulse">
             <span className="text-2xl font-bold">Error</span>
@@ -26,7 +43,7 @@ function WeatherCircle() {
                 <div className="h-14 w-14 bg-gray-300 rounded-xl animate-pulse"></div>
               ) : (
                 <span className="text-5xl">
-                  {Math.round(data?.current.temp_c ?? 0)}°
+                  {Math.round(weatherData?.current.temp_c ?? 0)}°
                 </span>
               )}
             </div>
@@ -35,8 +52,8 @@ function WeatherCircle() {
                 <div className="h-14 w-14 bg-gray-300 rounded-full animate-pulse"></div>
               ) : (
                 <img
-                  src={data?.current.condition.icon}
-                  alt={`${data?.current.condition.text || "Weather"} icon`}
+                  src={weatherData?.current.condition.icon}
+                  alt={`${weatherData?.current.condition.text || "Weather"} icon`}
                   className="text-5xl"
                 />
               )}
@@ -45,8 +62,8 @@ function WeatherCircle() {
               {isLoading ? (
                 <div className="h-21 w-5 bg-gray-300 rounded-xl animate-pulse"></div>
               ) : (
-                <div className="flex flex-col text-xl">
-                  <span>月</span>
+                <div className="flex flex-col text-xl text-white/70">
+                  <span>{symbol}</span>
                   <span>曜</span>
                   <span>日</span>
                 </div>
