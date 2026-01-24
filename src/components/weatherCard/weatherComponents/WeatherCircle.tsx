@@ -1,30 +1,22 @@
 import NavArrows from "./NavArrows";
 import type WeatherData from "../../../types/weather";
+import { useWeatherStore } from "../../../store/weatherStore";
+import { getThreeDaysConfig } from "../../../utils/dateUtils";
 
 interface WeatherCircleProps {
   weatherData: WeatherData | null;
   isLoading: boolean;
   error: Error | null;
-  color: string;
-  symbol: string;
-
-  onNext: () => void;
-  onPrev: () => void;
 }
 
-function WeatherCircle({
-  weatherData,
-  isLoading,
-  error,
-  color,
-  symbol,
+function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
+  const { dayOffset } = useWeatherStore();
 
-  onNext,
-  onPrev,
-}: WeatherCircleProps) {
+  const config = getThreeDaysConfig();
+  const { color, symbol } = config[dayOffset];
   return (
     <div className="mx-auto relative">
-      <NavArrows onNext={onNext} onPrev={onPrev} />
+      <NavArrows />
       <div
         className={`text-white w-64 h-64 rounded-full relative ${
           !error ? color : "bg-white"
