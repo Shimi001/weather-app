@@ -1,7 +1,7 @@
 import NavArrows from "./NavArrows";
 import type WeatherData from "../../../types/weather";
 import { useWeatherStore } from "../../../store/weatherStore";
-import { getThreeDaysConfig } from "../../../utils/dateUtils";
+import { days } from "../../../data/days";
 
 interface WeatherCircleProps {
   weatherData: WeatherData | null;
@@ -12,14 +12,33 @@ interface WeatherCircleProps {
 function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
   const { dayOffset } = useWeatherStore();
 
-  const config = getThreeDaysConfig();
-  const { color, symbol } = config[dayOffset];
+  const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
+
+  let dayStyle = days[new Date().getDay()];
+
+  if (forecastDay) {
+    const dateObj = new Date(forecastDay.date);
+    const dayIndex = dateObj.getDay();
+    dayStyle = days[dayIndex];
+  }
+
+  const { color, symbol } = dayStyle;
+
+  const temperature =
+    dayOffset === 0 ? weatherData?.current.temp_c : forecastDay?.day.avgtemp_c;
+
+  const icon =
+    dayOffset === 0
+      ? weatherData?.current.condition.icon
+      : forecastDay?.day.condition.icon;
+
   return (
     <div className="mx-auto relative">
       <NavArrows />
+
       <div
         className={`text-white w-64 h-64 rounded-full relative ${
-          !error ? color : "bg-white"
+          !error ? color : "bg-gray-400"
         }`}
       >
         {error ? (
@@ -29,32 +48,32 @@ function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
           </div>
         ) : (
           <>
-            {/* -translate-x-6 = 2 digits, -translate-x-3 = 1 digit */}
+            {/* temperature */}
             <div className="absolute top-1/4 left-1/2 -translate-x-6 -translate-y-5">
               {isLoading ? (
-                <div className="h-14 w-14 bg-gray-300 rounded-xl animate-pulse"></div>
+                <div className="h-14 w-14 bg-gray-300/50 rounded-xl animate-pulse"></div>
               ) : (
                 <span className="text-5xl">
-                  {Math.round(weatherData?.current.temp_c ?? 0)}°
+                  {Math.round(temperature ?? 0)}°
                 </span>
               )}
             </div>
+
+            {/* icon */}
             <div className="absolute top-1/2 left-1/2 -translate-x-7 translate-y-1">
               {isLoading ? (
-                <div className="h-14 w-14 bg-gray-300 rounded-full animate-pulse"></div>
+                <div className="h-14 w-14 bg-gray-300/50 rounded-full animate-pulse"></div>
               ) : (
-                <img
-                  src={weatherData?.current.condition.icon}
-                  alt={`${weatherData?.current.condition.text || "Weather"} icon`}
-                  className="text-5xl"
-                />
+                <img src={icon} alt="Weather icon" className="text-5xl" />
               )}
             </div>
+
+            {/* japanese symbol for the day of the week */}
             <div className="absolute top-1/2 right-1 -translate-x-5 -translate-y-11">
               {isLoading ? (
-                <div className="h-21 w-5 bg-gray-300 rounded-xl animate-pulse"></div>
+                <div className="h-21 w-5 bg-gray-300/50 rounded-xl animate-pulse"></div>
               ) : (
-                <div className="flex flex-col text-xl text-white/70">
+                <div className="flex flex-col text-xl font-bold text-white/70">
                   <span>{symbol}</span>
                   <span>曜</span>
                   <span>日</span>
