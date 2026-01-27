@@ -1,14 +1,58 @@
-function WeatherInfo() {
+import { useWeatherStore } from "../../../store/weatherStore";
+import type WeatherData from "../../../types/weather";
+import { days } from "../../../data/days";
+
+interface WeatherInfoProps {
+  weatherData: WeatherData | null;
+  isLoading: boolean;
+  error: Error | null;
+}
+
+function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
+  const { dayOffset } = useWeatherStore();
+
+  const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
+
+  let dayStyle = days[new Date().getDay()];
+
+  if (forecastDay) {
+    const dateObj = new Date(forecastDay.date);
+    const dayIndex = dateObj.getDay();
+    dayStyle = days[dayIndex];
+  }
+
+  const { name } = dayStyle;
+
+  const currentCondition =
+    dayOffset === 0
+      ? weatherData?.current.condition.text
+      : forecastDay?.day.condition.text;
+
   return (
     <div className="text-white">
-      <div className="mb-6">
-        <h2 className="text-5xl font-medium mb-0.5">Monday</h2>
-        <h2 className="text-xl text-white/60">19TH JANUARY</h2>
-      </div>
-      <p className="text-xl text-white/80">
-        Partly cloudy. Temperature range from 6°C to 9°C. Maximum wind speed 11
-        km/h. 89% daily chance of rain.
-      </p>
+      {error ? (
+        <div></div>
+      ) : (
+        <div className="mb-6">
+          <h2 className="text-5xl font-medium mb-0.5">{name}</h2>
+          {isLoading ? (
+            <div className="h-7 w-28 bg-gray-300/30 rounded-xl animate-pulse"></div>
+          ) : (
+            <h2 className="text-xl text-white/60">{forecastDay?.date}</h2>
+          )}
+        </div>
+      )}
+      {isLoading ? (
+        <div className="h-30 w-full bg-gray-300/30 rounded-xl animate-pulse"></div>
+      ) : (
+        <p className="text-xl text-white/80">
+          {currentCondition}. Temperature range from{" "}
+          {forecastDay?.day.mintemp_c}
+          °C to {forecastDay?.day.maxtemp_c}°C. Maximum wind speed{" "}
+          {forecastDay?.day.maxwind_kph} km/h.{" "}
+          {forecastDay?.day.daily_chance_of_rain}% daily chance of rain.
+        </p>
+      )}
     </div>
   );
 }
