@@ -1,5 +1,6 @@
 import { useWeatherStore } from "../../../store/weatherStore";
 import type WeatherData from "../../../types/weather";
+import { getDayStyle } from "../../../utils/weatherUtils";
 import { days } from "../../../data/days";
 
 interface WeatherInfoProps {
@@ -10,16 +11,9 @@ interface WeatherInfoProps {
 
 function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
   const { dayOffset } = useWeatherStore();
-
   const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
 
-  let dayStyle = days[new Date().getDay()];
-
-  if (forecastDay) {
-    const dateObj = new Date(forecastDay.date);
-    const dayIndex = dateObj.getDay();
-    dayStyle = days[dayIndex];
-  }
+  const dayStyle = getDayStyle(forecastDay, days);
 
   const { name } = dayStyle;
 
@@ -34,7 +28,11 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
         <div></div>
       ) : (
         <div className="mb-6">
-          <h2 className="text-5xl font-medium mb-0.5">{name}</h2>
+          {isLoading ? (
+            <div className="h-10 w-40 mb-0.5 bg-gray-300/30 rounded-xl animate-pulse"></div>
+          ) : (
+            <h2 className="text-5xl font-medium mb-0.5">{name}</h2>
+          )}
           {isLoading ? (
             <div className="h-7 w-28 bg-gray-300/30 rounded-xl animate-pulse"></div>
           ) : (

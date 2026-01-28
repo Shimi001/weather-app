@@ -2,6 +2,7 @@ import NavArrows from "./NavArrows";
 import type WeatherData from "../../../types/weather";
 import { useWeatherStore } from "../../../store/weatherStore";
 import { days } from "../../../data/days";
+import { getDayStyle } from "../../../utils/weatherUtils";
 
 interface WeatherCircleProps {
   weatherData: WeatherData | null;
@@ -11,16 +12,9 @@ interface WeatherCircleProps {
 
 function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
   const { dayOffset } = useWeatherStore();
-
   const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
 
-  let dayStyle = days[new Date().getDay()];
-
-  if (forecastDay) {
-    const dateObj = new Date(forecastDay.date);
-    const dayIndex = dateObj.getDay();
-    dayStyle = days[dayIndex];
-  }
+  const dayStyle = getDayStyle(forecastDay, days);
 
   const { color, symbol } = dayStyle;
 
