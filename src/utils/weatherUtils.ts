@@ -10,6 +10,16 @@ export const getDayStyle = (
   forecastDay: WeatherData["forecast"]["forecastday"][0] | undefined,
   days: DayStyle[],
 ) => {
+  const currentDayIndex = getCurrentDayIndex(forecastDay);
+
+  const dayStyle = days[currentDayIndex];
+
+  return dayStyle;
+};
+
+export const getCurrentDayIndex = (
+  forecastDay: WeatherData["forecast"]["forecastday"][0] | undefined,
+) => {
   let currentDayIndex: number;
 
   if (forecastDay) {
@@ -19,7 +29,5 @@ export const getDayStyle = (
     currentDayIndex = new Date().getDay();
   }
 
-  const dayStyle = days[currentDayIndex];
-
-  return dayStyle;
+  return currentDayIndex;
 };

@@ -18,7 +18,11 @@ function WeatherCard() {
         isLoading={isLoading}
         error={error}
       />
-      <DayIndicator />
+      <DayIndicator
+        weatherData={data ?? null}
+        isLoading={isLoading}
+        error={error}
+      />
     </div>
   );
 }
