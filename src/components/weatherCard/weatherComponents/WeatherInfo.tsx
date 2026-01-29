@@ -2,6 +2,7 @@ import { useWeatherStore } from "../../../store/weatherStore";
 import type WeatherData from "../../../types/weather";
 import { getDayStyle } from "../../../utils/weatherUtils";
 import { days } from "../../../data/days";
+import { getDayDate } from "../../../utils/formatDate";
 
 interface WeatherInfoProps {
   weatherData: WeatherData | null;
@@ -22,6 +23,8 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
       ? weatherData?.current.condition.text
       : forecastDay?.day.condition.text;
 
+  const formattedDate = getDayDate(forecastDay?.date);
+
   return (
     <div className="text-white">
       {error ? (
@@ -29,14 +32,14 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
       ) : (
         <div className="mb-6">
           {isLoading ? (
-            <div className="h-10 w-40 mb-0.5 bg-gray-300/30 rounded-xl animate-pulse"></div>
+            <div className="h-10 w-45 mb-0.5 bg-gray-300/30 rounded-2xl animate-pulse"></div>
           ) : (
             <h2 className="text-5xl font-medium mb-0.5">{name}</h2>
           )}
           {isLoading ? (
-            <div className="h-7 w-28 bg-gray-300/30 rounded-xl animate-pulse"></div>
+            <div className="h-7 w-35 bg-gray-300/30 rounded-xl animate-pulse"></div>
           ) : (
-            <h2 className="text-xl text-white/60">{forecastDay?.date}</h2>
+            <h2 className="text-xl text-white/60">{formattedDate}</h2>
           )}
         </div>
       )}
