@@ -6,7 +6,7 @@ function App() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1 flex items-center justify-center p-6">
+      <main className="flex-1 flex p-6">
         <WeatherCard />
       </main>
     </div>

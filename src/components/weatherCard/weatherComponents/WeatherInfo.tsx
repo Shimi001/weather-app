@@ -39,7 +39,7 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
           {isLoading ? (
             <div className="h-7 w-35 bg-gray-300/30 rounded-xl animate-pulse"></div>
           ) : (
-            <h2 className="text-xl text-white/60">{formattedDate}</h2>
+            <h2 className="text-xl font-medium text-white/60">{formattedDate}</h2>
           )}
         </div>
       )}

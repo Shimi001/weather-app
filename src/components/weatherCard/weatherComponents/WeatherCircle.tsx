@@ -28,7 +28,7 @@ function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
 
   return (
     <div className="mx-auto relative">
-      <NavArrows />
+      {error ? <div></div> : <NavArrows />}
 
       <div
         className={`text-white w-64 h-64 rounded-full relative ${
