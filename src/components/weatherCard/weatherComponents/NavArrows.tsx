@@ -1,11 +1,15 @@
 import { useWeatherStore } from "../../../store/weatherStore";
 
+/**
+ * Navigation controls (left/right arrows)
+ */
+
 function NavArrows() {
   const { incrementDay, decrementDay, dayOffset } = useWeatherStore();
 
   return (
     <>
-      {/* left button */}
+      {/* previous day */}
       <button
         onClick={decrementDay}
         disabled={dayOffset === 0}
@@ -13,7 +17,8 @@ function NavArrows() {
       >
         ‹
       </button>
-      {/* right button */}
+
+      {/* next day */}
       <button
         onClick={incrementDay}
         disabled={dayOffset === 2}

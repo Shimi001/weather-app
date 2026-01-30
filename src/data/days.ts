@@ -1,3 +1,7 @@
+/**
+ * Days of the week with their symbols and associated colors
+ */
+
 export const days = [
   { name: "Sunday", symbol: "日", color: "bg-rose-400" },
   { name: "Monday", symbol: "月", color: "bg-red-400" },

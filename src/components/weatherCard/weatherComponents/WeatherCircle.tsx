@@ -1,6 +1,6 @@
 import NavArrows from "./NavArrows";
-import type WeatherData from "../../../types/weather";
 import { useWeatherStore } from "../../../store/weatherStore";
+import type WeatherData from "../../../types/weather";
 import { days } from "../../../data/days";
 import { getDayStyle } from "../../../utils/weatherUtils";
 
@@ -10,14 +10,28 @@ interface WeatherCircleProps {
   error: Error | null;
 }
 
+/**
+ * WeatherCircle component
+ *
+ * @param weatherData the full API response object
+ * @param isLoading controls the skeleton loading UI
+ * @param error error object if the API call fails
+ */
+
 function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
+  // Get the current day offset from the store
   const { dayOffset } = useWeatherStore();
+
+  // Get the forecast day data based on the current day offset
   const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
 
+  // Get the style for the day based on the forecast data and days array
   const dayStyle = getDayStyle(forecastDay, days);
 
+  // Destructure color and symbol from the day style
   const { color, symbol } = dayStyle;
 
+  // Current temperature and icon based on day offset
   const temperature =
     dayOffset === 0 ? weatherData?.current.temp_c : forecastDay?.day.avgtemp_c;
 
@@ -28,6 +42,7 @@ function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
 
   return (
     <div className="mx-auto relative">
+      {/* Navigation arrows */}
       {error ? <div></div> : <NavArrows />}
 
       <div
