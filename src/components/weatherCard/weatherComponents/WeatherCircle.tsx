@@ -51,7 +51,7 @@ function WeatherCircle({ weatherData, isLoading, error }: WeatherCircleProps) {
         }`}
       >
         {error ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-red-500 p-4 text-center animate-pulse">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-red-500 p-4 text-center">
             <span className="text-2xl font-bold">Error</span>
             <span className="text-sm">{error.message}</span>
           </div>
