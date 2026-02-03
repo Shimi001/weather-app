@@ -16,21 +16,13 @@ function App() {
 
   const { searchQuery } = useWeatherStore();
 
-  const {
-    data,
-    isLoading: isApiLoading,
-    error,
-  } = useWeather(searchQuery ?? "");
+  const { data, isLoading: isApiLoading } = useWeather(searchQuery ?? "");
 
   const showLoading = isApiLoading || !searchQuery;
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header
-        weatherData={data ?? null}
-        isLoading={showLoading}
-        error={error}
-      />
+      <Header weatherData={data ?? null} isLoading={showLoading} />
 
       <main className="flex-1 flex p-6">
         <WeatherCard />

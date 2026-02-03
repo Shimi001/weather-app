@@ -4,24 +4,27 @@ import { create } from "zustand";
 interface WeatherState {
   dayOffset: number;
   searchQuery: string | null;
+  isManualSearch: boolean;
 
   incrementDay: () => void;
   decrementDay: () => void;
   setDayOffset: (offset: number) => void;
 
-  setSearchQuery: (query: string) => void;
+  setSearchQuery: (query: string, isManual?: boolean) => void;
 }
 
 /**
  * Zustand store for managing weather day offset state and search query
+ *
+ * - `dayOffset` - used to navigate between forecast days
+ * - `searchQuery` - stores the selected city name and manual search status
+ * - `isManualSearch` - stores the manual search status
  */
 
 export const useWeatherStore = create<WeatherState>((set) => ({
-  // Initial day offset
   dayOffset: 0,
-
-  // Initial search query
   searchQuery: null,
+  isManualSearch: false,
 
   // Function to increment the day offset (max 3 days forecast)
   incrementDay: () =>
@@ -38,6 +41,7 @@ export const useWeatherStore = create<WeatherState>((set) => ({
   // Function to set the day offset directly
   setDayOffset: (offset) => set({ dayOffset: offset }),
 
-  // Function to set the search query
-  setSearchQuery: (query) => set({ searchQuery: query }),
+  // Function to set the searchQuery and isManualSearch
+  setSearchQuery: (query, isManual = false) =>
+    set({ searchQuery: query, isManualSearch: isManual }),
 }));
