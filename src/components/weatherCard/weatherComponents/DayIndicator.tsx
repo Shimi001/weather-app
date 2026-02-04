@@ -1,5 +1,5 @@
 import { useWeatherStore } from "../../../store/weatherStore";
-import type WeatherData from "../../../types/weather";
+import type WeatherData from "../../../types/weatherApiForecast";
 import { days } from "../../../data/days";
 import { getCurrentDayIndex } from "../../../utils/weatherUtils";
 

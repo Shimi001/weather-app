@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MapPin, MapPinPen } from "lucide-react";
 import Logo from "../ui/Logo";
-import type WeatherData from "../../types/weather";
+import type WeatherData from "../../types/weatherApiForecast";
 import { useWeatherStore } from "../../store/weatherStore";
-import type { SearchCity } from "../../api/weatherApi";
-import { searchCities } from "../../api/weatherApi";
+import { useCitySearch } from "../../hooks/useCitySearch";
 
 interface HeaderProps {
   weatherData: WeatherData | null;
@@ -25,32 +24,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
   const { setSearchQuery, isManualSearch } = useWeatherStore();
   const { setDayOffset } = useWeatherStore();
 
-  // State for city search options
-  const [options, setOptions] = useState<SearchCity[]>([]);
-
-  // Effect to fetch city options based on input
-  useEffect(() => {
-    // Clear options if input is empty or too short
-    if (cityInput.length < 3) {
-      return;
-    }
-
-    // Debounce the search to avoid excessive API calls
-    const timeId = setTimeout(async () => {
-      try {
-        const result = await searchCities(cityInput);
-        setOptions(result);
-      } catch (error) {
-        console.error(error);
-        setOptions([]);
-      }
-    }, 500);
-
-    return () => {
-      clearTimeout(timeId);
-      setOptions([]);
-    };
-  }, [cityInput]);
+  const options = useCitySearch(cityInput);
 
   // Handle search form submission
   const handleSearch = (e: React.FormEvent) => {
@@ -69,7 +43,6 @@ function Header({ weatherData, isLoading }: HeaderProps) {
     setIsEditing(false);
     setDayOffset(0);
     setCityInput("");
-    setOptions([]);
   };
 
   return (

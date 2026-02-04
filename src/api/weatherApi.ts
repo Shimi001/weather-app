@@ -1,15 +1,8 @@
-import type WeatherData from "../types/weather";
+import type WeatherData from "../types/weatherApiForecast";
+import type SearchCity from "../types/weatherApiSearch";
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = import.meta.env.VITE_WEATHER_BASE_URL;
-
-export interface SearchCity {
-  id: number;
-  name: string;
-  region: string;
-  country: string;
-  url: string;
-}
 
 /**
  * weatherApi API key fetch function
@@ -39,9 +32,10 @@ export const fetchWeather = async (city: string): Promise<WeatherData> => {
 };
 
 /**
+ * searchCities function to fetch city search results
  *
- * @param query
- * @returns
+ * @param query the city name query string
+ * @returns a list of SearchCity objects matching the query
  */
 
 export const searchCities = async (query: string): Promise<SearchCity[]> => {

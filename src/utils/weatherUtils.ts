@@ -1,4 +1,4 @@
-import type WeatherData from "../types/weather";
+import type WeatherData from "../types/weatherApiForecast";
 
 interface DayStyle {
   name: string;
