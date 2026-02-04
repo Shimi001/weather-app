@@ -16,7 +16,12 @@ function App() {
 
   const { searchQuery } = useWeatherStore();
 
-  const { data, isLoading: isApiLoading } = useWeather(searchQuery ?? "");
+  // Fetch API key data using the custom hook
+  const {
+    data,
+    isLoading: isApiLoading,
+    error,
+  } = useWeather(searchQuery ?? "");
 
   const showLoading = isApiLoading || !searchQuery;
 
@@ -25,7 +30,11 @@ function App() {
       <Header weatherData={data ?? null} isLoading={showLoading} />
 
       <main className="flex-1 flex p-6">
-        <WeatherCard />
+        <WeatherCard
+          weatherData={data ?? null}
+          isLoading={showLoading}
+          error={error}
+        />
       </main>
     </div>
   );

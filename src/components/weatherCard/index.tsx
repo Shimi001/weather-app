@@ -1,44 +1,48 @@
+import type WeatherData from "../../types/weatherApiForecast";
 import WeatherCircle from "./weatherComponents/WeatherCircle";
 import WeatherInfo from "./weatherComponents/WeatherInfo";
 import DayIndicator from "./weatherComponents/DayIndicator";
-import { useWeather } from "../../hooks/useWeather";
 import { useWeatherStore } from "../../store/weatherStore";
+
+interface WeatherCardProps {
+  weatherData: WeatherData | null;
+  isLoading: boolean;
+  error: Error | null;
+}
 
 /**
  * WeatherCard component
  *
- * - combines all elements into one main component
+ * - combines all weatherComponents into one WeatherCard component
  *
  * @returns WeatherCircle WeatherInfo DayIndicator components
  */
 
-function WeatherCard() {
+function WeatherCard({
+  weatherData,
+  isLoading: isApiLoading,
+  error,
+}: WeatherCardProps) {
   // Get the current search query from the store
   const { searchQuery } = useWeatherStore();
 
-  // Fetch API key data using the custom hook
-  const {
-    data,
-    isLoading: isApiLoading,
-    error,
-  } = useWeather(searchQuery ?? "");
-
+  // Determine if we should show the loading state
   const showLoading = isApiLoading || !searchQuery;
 
   return (
     <div className="flex flex-col gap-12 w-full">
       <WeatherCircle
-        weatherData={data ?? null}
+        weatherData={weatherData ?? null}
         isLoading={showLoading}
         error={error}
       />
       <WeatherInfo
-        weatherData={data ?? null}
+        weatherData={weatherData ?? null}
         isLoading={showLoading}
         error={error}
       />
       <DayIndicator
-        weatherData={data ?? null}
+        weatherData={weatherData ?? null}
         isLoading={showLoading}
         error={error}
       />
