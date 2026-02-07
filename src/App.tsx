@@ -26,10 +26,10 @@ function App() {
   const showLoading = isApiLoading || !searchQuery;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col p-6 bg-linear-to-br from-blue-400 via-indigo-400 to-violet-400 ">
       <Header weatherData={data ?? null} isLoading={showLoading} />
 
-      <main className="flex-1 flex p-6">
+      <main className="">
         <WeatherCard
           weatherData={data ?? null}
           isLoading={showLoading}
