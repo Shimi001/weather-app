@@ -1,13 +1,13 @@
 import Header from "./components/layout/Header";
-import WeatherCard from "./components/weatherCard";
+import WeatherForecast from "./components/WeatherForecast";
 import { useGeoLocation } from "./hooks/useGeoLocation";
 import { useWeather } from "./hooks/useWeather";
 import { useWeatherStore } from "./store/weatherStore";
 
 /**
- * Root component
+ * Main application component that renders the Header and WeatherForecast components.
  *
- * @returns Header and WeatherCard components
+ * @returns Header and WeatherForecast components
  */
 
 function App() {
@@ -23,19 +23,18 @@ function App() {
     error,
   } = useWeather(searchQuery ?? "");
 
+  // Determine if we should show the loading state
   const showLoading = isApiLoading || !searchQuery;
 
   return (
     <div className="min-h-screen flex flex-col p-6 bg-linear-to-br from-blue-400 via-indigo-400 to-violet-400 ">
       <Header weatherData={data ?? null} isLoading={showLoading} />
 
-      <main className="">
-        <WeatherCard
-          weatherData={data ?? null}
-          isLoading={showLoading}
-          error={error}
-        />
-      </main>
+      <WeatherForecast
+        weatherData={data ?? null}
+        isLoading={showLoading}
+        error={error}
+      />
     </div>
   );
 }

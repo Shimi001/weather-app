@@ -1,28 +1,28 @@
 import type WeatherData from "../../types/weatherApiForecast";
-import WeatherCircle from "./weatherComponents/WeatherCircle";
-import WeatherInfo from "./weatherComponents/WeatherInfo";
-import DayIndicator from "./weatherComponents/DayIndicator";
 import { useWeatherStore } from "../../store/weatherStore";
+import CurrentWeather from "./weatherComponents/CurrentWeather";
+import WeatherInfo from "./weatherComponents/WeatherInfo";
+import ForecastScroll from "./weatherComponents/ForecastScroll";
 
-interface WeatherCardProps {
+interface WeatherForecastProps {
   weatherData: WeatherData | null;
   isLoading: boolean;
   error: Error | null;
 }
 
 /**
- * WeatherCard component
+ * WeatherForecast component
  *
- * - combines all weatherComponents into one WeatherCard component
+ * - combines all weatherComponents into one WeatherForecast component
  *
- * @returns WeatherCircle WeatherInfo DayIndicator components
+ * @returns CurrentWeather WeatherInfo DayIndicator components
  */
 
-function WeatherCard({
+function WeatherForecast({
   weatherData,
   isLoading: isApiLoading,
   error,
-}: WeatherCardProps) {
+}: WeatherForecastProps) {
   // Get the current search query from the store
   const { searchQuery } = useWeatherStore();
 
@@ -30,8 +30,8 @@ function WeatherCard({
   const showLoading = isApiLoading || !searchQuery;
 
   return (
-    <div className="flex flex-col gap-12 w-full">
-      <WeatherCircle
+    <main className="flex flex-col w-full">
+      <CurrentWeather
         weatherData={weatherData ?? null}
         isLoading={showLoading}
         error={error}
@@ -41,13 +41,14 @@ function WeatherCard({
         isLoading={showLoading}
         error={error}
       />
-      <DayIndicator
+      <h2 className="text-white/70 font-bold mb-3">3-day forecast</h2>
+      <ForecastScroll
         weatherData={weatherData ?? null}
         isLoading={showLoading}
         error={error}
       />
-    </div>
+    </main>
   );
 }
 
-export default WeatherCard;
+export default WeatherForecast;

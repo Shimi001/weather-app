@@ -2,8 +2,6 @@ import type WeatherData from "../types/weatherApiForecast";
 
 interface DayStyle {
   name: string;
-  symbol: string;
-  color: string;
 }
 
 /**
