@@ -8,9 +8,10 @@ export default interface WeatherData {
   };
   current: {
     temp_c: number;
+    is_day: boolean;
     condition: {
       text: string;
-      icon: string;
+      code: number;
     };
   };
   forecast: {
@@ -32,6 +33,6 @@ export interface DayWeather {
   daily_chance_of_snow: number;
   condition: {
     text: string;
-    icon: string;
+    code: number;
   };
 }

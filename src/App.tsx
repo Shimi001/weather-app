@@ -3,6 +3,7 @@ import WeatherForecast from "./components/WeatherForecast";
 import { useGeoLocation } from "./hooks/useGeoLocation";
 import { useWeather } from "./hooks/useWeather";
 import { useWeatherStore } from "./store/weatherStore";
+import { weatherCondition } from "./data/conditions";
 
 /**
  * Main application component that renders the Header and WeatherForecast components.
@@ -26,8 +27,17 @@ function App() {
   // Determine if we should show the loading state
   const showLoading = isApiLoading || !searchQuery;
 
+  // Condition
+  const weatherCode = data?.current.condition.code ?? 1000;
+  const weather = weatherCondition[weatherCode];
+
+  const isDay = data?.current.is_day;
+  const theme = isDay ? weather.day : weather.night;
+
   return (
-    <div className="min-h-screen flex flex-col p-6 bg-linear-to-br from-blue-400 via-indigo-400 to-violet-400 ">
+    <div
+      className={`min-h-screen flex flex-col p-6 bg-linear-to-br ${theme.bg}`}
+    >
       <Header weatherData={data ?? null} isLoading={showLoading} />
 
       <WeatherForecast

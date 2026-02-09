@@ -1,7 +1,8 @@
 import { useWeatherStore } from "../../../store/weatherStore";
 import type WeatherData from "../../../types/weatherApiForecast";
 import { getDayStyle } from "../../../utils/weatherUtils";
-import { days } from "../../../data/days";
+import { day } from "../../../data/days";
+import { weatherCondition } from "../../../data/conditions";
 import { getDayDate } from "../../../utils/formatDate";
 
 interface CurrentWeatherProps {
@@ -23,45 +24,44 @@ function CurrentWeather({
   isLoading,
   error,
 }: CurrentWeatherProps) {
-  // Get the current day offset from the store
   const { dayOffset } = useWeatherStore();
 
   // Get the forecast day data based on the current day offset
   const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
 
-  // Get the style for the day based on the forecast data and days array
-  const dayStyle = getDayStyle(forecastDay, days);
-
-  // Destructure name from the day style
+  // Get the day of the week
+  const dayStyle = getDayStyle(forecastDay, day);
   const { name } = dayStyle;
 
   // Formatted date
   const formattedDate = getDayDate(forecastDay?.date);
 
-  // Current temperature and icon based on day offset
+  // Current condition
   const temperature =
     dayOffset === 0 ? weatherData?.current.temp_c : forecastDay?.day.avgtemp_c;
 
-  // Current icon based on day offset
-  const icon =
-    dayOffset === 0
-      ? weatherData?.current.condition.icon
-      : forecastDay?.day.condition.icon;
-
-  // Current condition based on day offset
   const currentCondition =
     dayOffset === 0
       ? weatherData?.current.condition.text
       : forecastDay?.day.condition.text;
 
+  // Weather Icon
+  const weatherCode = weatherData?.current.condition.code ?? 1000;
+  const weather = weatherCondition[weatherCode];
+
+  const isDay = weatherData?.current.is_day;
+  const theme = isDay ? weather.day : weather.night;
+
+  const Icon = theme.icon;
+
   return (
-    <div className="text-white border bg-white/10 border-white/20 backdrop-blur-lg p-8 rounded-3xl shadow mb-5">
+    <div className="text-white border bg-white/10 border-white/30 p-8 py-9 rounded-3xl shadow mb-5">
       {error ? (
         <div></div>
       ) : (
         <>
           {/* day of the week and date */}
-          <div className="mb-6">
+          <div className="mb-8">
             {isLoading ? (
               <div className="h-10 w-45 mb-0.5 bg-gray-300/20 rounded-2xl animate-pulse"></div>
             ) : (
@@ -77,11 +77,11 @@ function CurrentWeather({
           </div>
 
           {/* icon */}
-          <div className="flex justify-center mb-5">
+          <div className="flex justify-center mb-6">
             {isLoading ? (
               <div className="h-14 w-14 bg-gray-300/20 rounded-full animate-pulse"></div>
             ) : (
-              <img src={icon} alt="Weather icon" />
+              <Icon size={70} className={`${theme.text}`} />
             )}
           </div>
 
@@ -91,17 +91,17 @@ function CurrentWeather({
               <div className="h-14 w-14 bg-gray-300/20 rounded-xl animate-pulse"></div>
             ) : (
               <span className="text-6xl font-medium">
-                {Math.round(temperature ?? 0)}°
+                {Math.round(temperature ?? 0)}
               </span>
             )}
           </div>
 
           {/* condition */}
-          <div className="flex justify-center text-white/60 text-xl mb-5">
+          <div className="flex justify-center text-white/60 text-xl mb-6">
             {isLoading ? (
               <div className="h-7 w-40 bg-gray-300/20 rounded-xl animate-pulse"></div>
             ) : (
-              <span> {currentCondition}</span>
+              <span>{currentCondition}</span>
             )}
           </div>
 
@@ -111,7 +111,7 @@ function CurrentWeather({
               <div className="h-7 w-13 bg-gray-300/20 rounded-xl animate-pulse"></div>
             ) : (
               <span className="flex flex-row text-white/90">
-                H {forecastDay?.day.maxtemp_c}°
+                L {forecastDay?.day.mintemp_c}
               </span>
             )}
 
@@ -119,7 +119,7 @@ function CurrentWeather({
               <div className="h-7 w-13 bg-gray-300/20 rounded-xl animate-pulse"></div>
             ) : (
               <span className="flex flex-row text-white/90">
-                L {forecastDay?.day.mintemp_c}°
+                H {forecastDay?.day.maxtemp_c}
               </span>
             )}
           </div>
