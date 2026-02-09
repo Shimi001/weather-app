@@ -13,6 +13,11 @@ export default interface WeatherData {
       text: string;
       code: number;
     };
+    wind_kph: number;
+    humidity: number;
+    feelslike_c: number;
+    vis_km: number;
+    uv: number;
   };
   forecast: {
     forecastday: ForecastDay[];
@@ -29,10 +34,12 @@ export interface DayWeather {
   mintemp_c: number;
   avgtemp_c: number;
   maxwind_kph: number;
+  avghumidity: number;
   daily_chance_of_rain: number;
   daily_chance_of_snow: number;
   condition: {
     text: string;
     code: number;
   };
+  uv: number;
 }
