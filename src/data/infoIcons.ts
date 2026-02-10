@@ -3,21 +3,22 @@ import {
   Umbrella,
   Droplet,
   Wind,
-  Thermometer,
+  CloudRain,
   SunMedium,
   Eye,
 } from "lucide-react";
 
 export interface InfoIcon {
   name: string;
+  label: string;
   icon: LucideIcon;
 }
 
 export const infoIcon = [
-  { name: "precip", icon: Umbrella },
-  { name: "humidity", icon: Droplet },
-  { name: "km/h", icon: Wind }, // wind
-  { name: "feels like", icon: Thermometer },
-  { name: "UV", icon: SunMedium },
-  { name: "visibility", icon: Eye },
+  { name: "chance_of_precip", label: "precip", icon: Umbrella },
+  { name: "precip_mm", label: "amount", icon: CloudRain },
+  { name: "humidity", label: "humidity", icon: Droplet },
+  { name: "uv", label: "UV", icon: SunMedium },
+  { name: "wind", label: "wind", icon: Wind },
+  { name: "visibility", label: "visibility", icon: Eye },
 ];

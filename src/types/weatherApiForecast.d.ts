@@ -14,8 +14,8 @@ export default interface WeatherData {
       code: number;
     };
     wind_kph: number;
+    precip_mm: number;
     humidity: number;
-    feelslike_c: number;
     vis_km: number;
     uv: number;
   };
@@ -33,7 +33,9 @@ export interface DayWeather {
   maxtemp_c: number;
   mintemp_c: number;
   avgtemp_c: number;
+  totalprecip_mm: number;
   maxwind_kph: number;
+  avgvis_km: number;
   avghumidity: number;
   daily_chance_of_rain: number;
   daily_chance_of_snow: number;

@@ -22,23 +22,34 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
   // Get the forecast day data based on the current day offset
   const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
 
+  // Get info values from API key
   const getInfoValue = (name: string) => {
-    if (!forecastDay) return "N/A";
+    if (!forecastDay || !weatherData) return "N/A";
+
     const { day } = forecastDay;
+    const { current } = weatherData;
+
+    const isToday = dayOffset === 0;
 
     switch (name) {
-      case "precip":
+      case "chance_of_precip":
         return `${day.daily_chance_of_rain}%`;
+
+      case "precip_mm":
+        return isToday ? `${current.precip_mm} mm` : `${day.totalprecip_mm} mm`;
+
       case "humidity":
-        return `${weatherData.current.humidity}%`;
-      case "km/h": // wind
-        return `${weatherData.current.wind_kph}`;
-      case "feels like":
-        return `${day.avgtemp_c}`;
-      case "UV":
-        return day.uv;
+        return isToday ? `${current.humidity}%` : `${day.avghumidity}%`;
+
+      case "uv":
+        return isToday ? `${current.uv}` : `${day.uv}`;
+
+      case "wind":
+        return isToday ? `${current.wind_kph} km` : `${day.maxwind_kph} km`;
+
       case "visibility":
-        return `${weatherData.current.vis_km} km`;
+        return isToday ? `${current.vis_km} km` : `${day.avgvis_km} km`;
+
       default:
         return "";
     }
@@ -58,14 +69,16 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
                 const Icon = info.icon;
                 return (
                   <div key={index}>
-                    <div className="flex flex-col bg-white/10 p-4 w-25 rounded-2xl text-center shadow">
+                    <div className="flex flex-col text-center bg-white/10 p-4 w-25 rounded-2xl shadow">
                       <span className="flex text-white/90 justify-center mb-2">
                         <Icon />
                       </span>
                       <span className="text-white">
                         {getInfoValue(info.name)}
                       </span>
-                      <span className="text-white/50 text-sm">{info.name}</span>
+                      <span className="text-white/50 text-sm">
+                        {info.label}
+                      </span>
                     </div>
                   </div>
                 );
