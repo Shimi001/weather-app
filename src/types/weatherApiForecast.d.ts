@@ -26,7 +26,7 @@ export default interface WeatherData {
 
 export interface ForecastDay {
   date: string;
-  date_apoch: number;
+  date_epoch: number;
   day: DayWeather;
 }
 

@@ -1,7 +1,6 @@
 import type WeatherData from "../../../types/weatherApiForecast";
 import { useWeatherStore } from "../../../store/weatherStore";
 import { weatherCondition } from "../../../data/conditions";
-import { dayOfWeek } from "../../../data/days";
 
 interface ForecastScrollProps {
   weatherData: WeatherData | null;
@@ -21,11 +20,10 @@ function ForecastScroll({ weatherData }: ForecastScrollProps) {
   // Get the forecast day data based on the current day offset
   const forecastDay = weatherData?.forecast?.forecastday || [];
 
-  // Get day of the week
+  // Get the day of the week
   const getDayName = (dateString: string) => {
     const dateObj = new Date(dateString);
-    const dayIndex = dateObj.getDay();
-    return dayOfWeek[dayIndex].name.slice(0, 3);
+    return dateObj.toLocaleDateString("en-US", { weekday: "short" });
   };
 
   // Day theme
@@ -47,7 +45,7 @@ function ForecastScroll({ weatherData }: ForecastScrollProps) {
         const dayName = getDayName(day.date);
         return (
           <button
-            key={day.date_apoch}
+            key={day.date_epoch}
             onClick={() => setDayOffset(index)}
             className={`flex flex-col ${dayTheme} shadow rounded-2xl text-center p-5 px-6 ${isActiv ? "scale-110 shadow-xl" : ""}`}
           >

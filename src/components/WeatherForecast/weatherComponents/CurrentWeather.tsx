@@ -1,7 +1,5 @@
 import { useWeatherStore } from "../../../store/weatherStore";
 import type WeatherData from "../../../types/weatherApiForecast";
-import { getDayStyle } from "../../../utils/weatherUtils";
-import { dayOfWeek } from "../../../data/days";
 import { weatherCondition } from "../../../data/conditions";
 import { getDayDate } from "../../../utils/formatDate";
 
@@ -30,8 +28,12 @@ function CurrentWeather({
   const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
 
   // Get the day of the week
-  const dayStyle = getDayStyle(forecastDay, dayOfWeek);
-  const { name } = dayStyle;
+  const getDayName = (dateString: string) => {
+    const dateObj = new Date(dateString);
+    return dateObj.toLocaleDateString("en-US", { weekday: "long" });
+  };
+
+  const dayName = getDayName(forecastDay?.date || "");
 
   // Formatted date
   const formattedDate = getDayDate(forecastDay?.date);
@@ -71,7 +73,7 @@ function CurrentWeather({
             {isLoading ? (
               <div className="h-10 w-45 mb-0.5 bg-gray-300/20 rounded-2xl animate-pulse"></div>
             ) : (
-              <h2 className="text-5xl font-medium mb-0.5">{name}</h2>
+              <h2 className="text-5xl font-medium mb-0.5">{dayName}</h2>
             )}
             {isLoading ? (
               <div className="h-7 w-35 bg-gray-300/20 rounded-xl animate-pulse"></div>
