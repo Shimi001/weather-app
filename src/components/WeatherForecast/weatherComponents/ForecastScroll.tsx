@@ -1,5 +1,7 @@
 import type WeatherData from "../../../types/weatherApiForecast";
 import { useWeatherStore } from "../../../store/weatherStore";
+import { weatherCondition } from "../../../data/conditions";
+import { dayOfWeek } from "../../../data/days";
 
 interface ForecastScrollProps {
   weatherData: WeatherData | null;
@@ -14,43 +16,42 @@ interface ForecastScrollProps {
  */
 
 function ForecastScroll({ weatherData }: ForecastScrollProps) {
-  // Get the current day offset from the store
-  const { dayOffset } = useWeatherStore();
+  const { dayOffset, setDayOffset } = useWeatherStore();
 
   // Get the forecast day data based on the current day offset
-  const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
+  const forecastDay = weatherData?.forecast?.forecastday || [];
 
-  const icon =
-    dayOffset === 0
-      ? weatherData?.current.condition.icon
-      : forecastDay?.day.condition.icon;
+  // Get day of the week
+  const getDayName = (dateString: string) => {
+    const dateObj = new Date(dateString);
+    const dayIndex = dateObj.getDay();
+    return dayOfWeek[dayIndex].name.slice(0, 3);
+  };
 
   return (
-    <div className="flex flex-row justify-around text-white">
-      <div className="flex flex-col border bg-white/10 border-white/20 shadow-lg p-5 rounded-2xl text-center scale-110">
-        <span className="text-white/70 mb-2">Sa</span>
-        <img src={icon} alt="Weather icon" className="h-12" />
-        <span>{forecastDay?.day.maxtemp_c}</span>
-        <span className="text-white/60 text-xs">
-          {forecastDay?.day.mintemp_c}
-        </span>
-      </div>
-      <div className="flex flex-col border bg-white/10 border-white/20 shadow p-5 rounded-2xl text-center">
-        <span className="text-white/70 mb-2">Sa</span>
-        <img src={icon} alt="Weather icon" className="h-12" />
-        <span>{forecastDay?.day.maxtemp_c}</span>
-        <span className="text-white/60 text-xs">
-          {forecastDay?.day.mintemp_c}
-        </span>
-      </div>
-      <div className="flex flex-col border bg-white/10 border-white/20 shadow p-5 rounded-2xl text-center">
-        <span className="text-white/70 mb-2">Sa</span>
-        <img src={icon} alt="Weather icon" className="h-12" />
-        <span>{forecastDay?.day.maxtemp_c}</span>
-        <span className="text-white/60 text-xs">
-          {forecastDay?.day.mintemp_c}
-        </span>
-      </div>
+    <div className="flex flex-row justify-around">
+      {forecastDay.map((day, index) => {
+        const code = day.day.condition.code;
+
+        const weather = weatherCondition[code];
+        const theme = weather?.day;
+        const Icon = theme?.icon;
+
+        const isActiv = index === dayOffset;
+        const dayName = getDayName(day.date);
+        return (
+          <button
+            key={day.date_apoch}
+            onClick={() => setDayOffset(index)}
+            className={`flex flex-col bg-white/10 shadow rounded-2xl text-center p-5 px-6 ${isActiv ? "scale-110 shadow-xl" : ""}`}
+          >
+            <span className="text-white/70 mb-3">{dayName}</span>
+            <Icon size={45} className="text-white/95 mb-2" />
+            <span className="text-white/90">{day.day.maxtemp_c}</span>
+            <span className="text-white/60 text-xs">{day.day.mintemp_c}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }
