@@ -35,19 +35,25 @@ function ForecastScroll({ weatherData }: ForecastScrollProps) {
   return (
     <div className="flex flex-row justify-around">
       {forecastDay.map((day, index) => {
-        const code = day.day.condition.code;
+        const isToday = index === 0;
 
-        const weather = weatherCondition[code];
-        const theme = weather?.day;
+        const code = isToday
+          ? weatherData?.current.condition.code
+          : day.day.condition.code;
+
+        const isDayTime = isToday ? weatherData?.current.is_day : 1;
+
+        const weatherConf = weatherCondition[code || 1000];
+        const theme = isDayTime ? weatherConf?.day : weatherConf?.night;
         const Icon = theme?.icon;
 
-        const isActiv = index === dayOffset;
+        const isActive = index === dayOffset;
         const dayName = getDayName(day.date);
         return (
           <button
             key={day.date_epoch}
             onClick={() => setDayOffset(index)}
-            className={`flex flex-col ${dayTheme} shadow rounded-2xl text-center p-5 px-6 ${isActiv ? "scale-110 shadow-xl" : ""}`}
+            className={`flex flex-col ${dayTheme} shadow rounded-2xl text-center p-5 px-6 ${isActive ? "scale-110 shadow-xl" : ""}`}
           >
             <span className="text-white/70 mb-3">{dayName}</span>
             <Icon size={45} className="text-white/95 mb-2" />
