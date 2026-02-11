@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin, MapPinPen, Settings } from "lucide-react";
+import { MapPin, MapPinPen } from "lucide-react";
 import type WeatherData from "../../types/weatherApiForecast";
 import { useWeatherStore } from "../../store/weatherStore";
 import { useCitySearch } from "../../hooks/useCitySearch";
@@ -44,8 +44,14 @@ function Header({ weatherData, isLoading }: HeaderProps) {
     setCityInput("");
   };
 
+  // Day theme
+  let dayTheme = "bg-white/10";
+  if (weatherData?.current.is_day === 1) {
+    dayTheme = "bg-black/10";
+  }
+
   return (
-    <header className="flex flex-row justify-between mb-6">
+    <header className="flex flex-row justify-between mb-6 ml-2">
       {isLoading ? (
         <div className="h-11 w-35 bg-gray-300/20 rounded-3xl animate-pulse"></div>
       ) : (
@@ -55,7 +61,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
             <>
               <form
                 onSubmit={handleSearch}
-                className={`flex items-center border border-white/20 bg-white/10 backdrop-blur-lg shadow px-4 py-2 gap-1 rounded-3xl w-fit max-w-42 ${
+                className={`flex items-center border ${dayTheme} border-white/15 backdrop-blur-lg shadow px-5 py-2 gap-1 rounded-3xl w-fit max-w-42 ${
                   options.length > 0 && isEditing
                     ? "rounded-b-none border-b-0 shadow-none"
                     : ""
@@ -75,7 +81,9 @@ function Header({ weatherData, isLoading }: HeaderProps) {
                 />
               </form>
               {options.length > 0 && isEditing && (
-                <ul className="absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 border border-t-0 rounded-t-none bg-white/10 border-white/20 backdrop-blur-lg w-42 rounded-3xl">
+                <ul
+                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 border border-t-0 rounded-t-none ${dayTheme} border-white/15 backdrop-blur-lg w-42 rounded-3xl`}
+                >
                   {options.map((city) => (
                     <li
                       key={city.id}
@@ -95,7 +103,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
             <>
               <button
                 onClick={() => setIsEditing(true)}
-                className="flex items-center border border-white/20 bg-white/10 backdrop-blur-lg px-5 py-2 gap-1 rounded-3xl shadow"
+                className={`flex items-center border ${dayTheme} border-white/15 px-5 py-2 gap-1 rounded-3xl shadow`}
               >
                 {isManualSearch ? (
                   <MapPinPen size={16} className="shrink-0" />
@@ -110,11 +118,6 @@ function Header({ weatherData, isLoading }: HeaderProps) {
           )}
         </div>
       )}
-
-      {/* settings */}
-      <div className="flex items-center justify-center">
-        <Settings className="text-white" size={30} />
-      </div>
     </header>
   );
 }

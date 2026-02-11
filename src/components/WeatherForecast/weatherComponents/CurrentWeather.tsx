@@ -1,7 +1,7 @@
 import { useWeatherStore } from "../../../store/weatherStore";
 import type WeatherData from "../../../types/weatherApiForecast";
 import { getDayStyle } from "../../../utils/weatherUtils";
-import { day } from "../../../data/days";
+import { dayOfWeek } from "../../../data/days";
 import { weatherCondition } from "../../../data/conditions";
 import { getDayDate } from "../../../utils/formatDate";
 
@@ -30,7 +30,7 @@ function CurrentWeather({
   const forecastDay = weatherData?.forecast?.forecastday[dayOffset];
 
   // Get the day of the week
-  const dayStyle = getDayStyle(forecastDay, day);
+  const dayStyle = getDayStyle(forecastDay, dayOfWeek);
   const { name } = dayStyle;
 
   // Formatted date
@@ -54,8 +54,14 @@ function CurrentWeather({
 
   const Icon = theme.icon;
 
+  // Day theme
+  let dayTheme = "bg-white/10";
+  if (isDay === 1) {
+    dayTheme = "bg-black/10";
+  }
+
   return (
-    <div className="text-white border bg-white/10 border-white/30 p-8 py-9 rounded-3xl shadow mb-5">
+    <div className={`text-white ${dayTheme} p-8 py-9 rounded-3xl shadow mb-5`}>
       {error ? (
         <div></div>
       ) : (
@@ -101,7 +107,7 @@ function CurrentWeather({
             {isLoading ? (
               <div className="h-7 w-40 bg-gray-300/20 rounded-xl animate-pulse"></div>
             ) : (
-              <span>{currentCondition}</span>
+              <span className="font-medium">{currentCondition}</span>
             )}
           </div>
 
@@ -110,7 +116,7 @@ function CurrentWeather({
             {isLoading ? (
               <div className="h-7 w-13 bg-gray-300/20 rounded-xl animate-pulse"></div>
             ) : (
-              <span className="flex flex-row text-white/90">
+              <span className="flex flex-row text-white/75">
                 L {forecastDay?.day.mintemp_c}
               </span>
             )}
@@ -118,7 +124,7 @@ function CurrentWeather({
             {isLoading ? (
               <div className="h-7 w-13 bg-gray-300/20 rounded-xl animate-pulse"></div>
             ) : (
-              <span className="flex flex-row text-white/90">
+              <span className="flex flex-row text-white/75">
                 H {forecastDay?.day.maxtemp_c}
               </span>
             )}

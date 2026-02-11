@@ -55,6 +55,12 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
     }
   };
 
+  // Day theme
+  let dayTheme = "bg-white/10";
+  if (weatherData?.current.is_day === 1) {
+    dayTheme = "bg-black/10";
+  }
+
   return (
     <>
       {error ? (
@@ -69,7 +75,7 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
                 const Icon = info.icon;
                 return (
                   <div key={index}>
-                    <div className="flex flex-col text-center bg-white/10 p-4 w-25 rounded-2xl shadow">
+                    <div className={`flex flex-col text-center ${dayTheme} p-4 w-25 rounded-2xl shadow`}>
                       <span className="flex text-white/90 justify-center mb-2">
                         <Icon />
                       </span>

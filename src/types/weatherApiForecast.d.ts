@@ -8,7 +8,7 @@ export default interface WeatherData {
   };
   current: {
     temp_c: number;
-    is_day: boolean;
+    is_day: number;
     condition: {
       text: string;
       code: number;
@@ -26,6 +26,7 @@ export default interface WeatherData {
 
 export interface ForecastDay {
   date: string;
+  date_apoch: number;
   day: DayWeather;
 }
 
