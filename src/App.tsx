@@ -15,7 +15,7 @@ function App() {
   // Use custom hook to get user's geolocation
   useGeoLocation();
 
-  const { searchQuery } = useWeatherStore();
+  const { searchQuery, dayOffset } = useWeatherStore();
 
   // Fetch API key data using the custom hook
   const {
@@ -28,11 +28,16 @@ function App() {
   const showLoading = isApiLoading || !searchQuery;
 
   // Condition
-  const weatherCode = data?.current.condition.code ?? 1000;
-  const weather = weatherCondition[weatherCode];
+  const weather =
+    dayOffset === 0
+      ? weatherCondition[data?.current.condition.code ?? 1000]
+      : weatherCondition[
+          data?.forecast?.forecastday[dayOffset].day.condition.code ?? 1000
+        ];
 
   const isDay = data?.current.is_day;
-  const theme = isDay ? weather.day : weather.night;
+  const theme =
+    dayOffset === 0 ? (isDay ? weather.day : weather.night) : weather.day;
 
   return (
     <div

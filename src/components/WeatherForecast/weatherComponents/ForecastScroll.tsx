@@ -28,7 +28,7 @@ function ForecastScroll({ weatherData }: ForecastScrollProps) {
 
   // Day theme
   let dayTheme = "bg-white/10";
-  if (weatherData?.current.is_day === 1) {
+  if (weatherData?.current.is_day === 1 || dayOffset !== 0) {
     dayTheme = "bg-black/10";
   }
 
@@ -53,7 +53,7 @@ function ForecastScroll({ weatherData }: ForecastScrollProps) {
           <button
             key={day.date_epoch}
             onClick={() => setDayOffset(index)}
-            className={`flex flex-col ${dayTheme} shadow rounded-2xl text-center p-5 px-6 ${isActive ? "scale-110 shadow-xl" : ""}`}
+            className={`flex flex-col ${dayTheme} shadow rounded-2xl text-center p-5 px-6 ${isActive ? "scale-110 shadow-xl border border-white/20" : ""}`}
           >
             <span className="text-white/70 mb-3">{dayName}</span>
             <Icon size={45} className="text-white/95 mb-2" />

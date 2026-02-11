@@ -19,6 +19,6 @@ export const infoIcon = [
   { name: "precip_mm", label: "amount", icon: CloudRain },
   { name: "humidity", label: "humidity", icon: Droplet },
   { name: "uv", label: "UV", icon: SunMedium },
-  { name: "wind", label: "wind", icon: Wind },
+  { name: "wind", label: "km/h", icon: Wind },
   { name: "visibility", label: "visibility", icon: Eye },
 ];

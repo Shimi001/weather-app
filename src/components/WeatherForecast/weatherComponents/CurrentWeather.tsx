@@ -48,17 +48,20 @@ function CurrentWeather({
       : forecastDay?.day.condition.text;
 
   // Weather Icon
-  const weatherCode = weatherData?.current.condition.code ?? 1000;
-  const weather = weatherCondition[weatherCode];
+  const weather =
+    dayOffset === 0
+      ? weatherCondition[weatherData?.current.condition.code ?? 1000]
+      : weatherCondition[forecastDay?.day.condition.code ?? 1000];
 
   const isDay = weatherData?.current.is_day;
-  const theme = isDay ? weather.day : weather.night;
+  const theme =
+    dayOffset === 0 ? (isDay ? weather.day : weather.night) : weather.day;
 
   const Icon = theme.icon;
 
   // Day theme
   let dayTheme = "bg-white/10";
-  if (isDay === 1) {
+  if (isDay === 1 || dayOffset !== 0) {
     dayTheme = "bg-black/10";
   }
 

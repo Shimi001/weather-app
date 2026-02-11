@@ -20,7 +20,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
   const [cityInput, setCityInput] = useState("");
 
   // Weather store variables and functions
-  const { setSearchQuery, isManualSearch } = useWeatherStore();
+  const { setSearchQuery, isManualSearch, dayOffset } = useWeatherStore();
   const { setDayOffset } = useWeatherStore();
 
   const options = useCitySearch(cityInput);
@@ -45,9 +45,9 @@ function Header({ weatherData, isLoading }: HeaderProps) {
   };
 
   // Day theme
-  let dayTheme = "bg-white/10";
-  if (weatherData?.current.is_day === 1) {
-    dayTheme = "bg-black/10";
+  let dayTheme = "bg-white/10 border-white/15";
+  if (weatherData?.current.is_day === 1 || dayOffset !== 0) {
+    dayTheme = "bg-black/10 border-black/5";
   }
 
   return (
@@ -61,7 +61,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
             <>
               <form
                 onSubmit={handleSearch}
-                className={`flex items-center border ${dayTheme} border-white/15 backdrop-blur-lg shadow px-5 py-2 gap-1 rounded-3xl w-fit max-w-42 ${
+                className={`flex items-center border ${dayTheme} backdrop-blur-lg shadow px-5 py-2 gap-1 rounded-3xl w-fit max-w-42 ${
                   options.length > 0 && isEditing
                     ? "rounded-b-none border-b-0 shadow-none"
                     : ""
@@ -82,7 +82,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
               </form>
               {options.length > 0 && isEditing && (
                 <ul
-                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 border border-t-0 rounded-t-none ${dayTheme} border-white/15 backdrop-blur-lg w-42 rounded-3xl`}
+                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 border border-t-0 rounded-t-none ${dayTheme} backdrop-blur-lg w-42 rounded-3xl`}
                 >
                   {options.map((city) => (
                     <li
@@ -103,7 +103,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
             <>
               <button
                 onClick={() => setIsEditing(true)}
-                className={`flex items-center border ${dayTheme} border-white/15 px-5 py-2 gap-1 rounded-3xl shadow`}
+                className={`flex items-center border ${dayTheme} px-5 py-2 gap-1 rounded-3xl shadow`}
               >
                 {isManualSearch ? (
                   <MapPinPen size={16} className="shrink-0" />

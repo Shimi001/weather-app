@@ -45,7 +45,7 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
         return isToday ? `${current.uv}` : `${day.uv}`;
 
       case "wind":
-        return isToday ? `${current.wind_kph} km` : `${day.maxwind_kph} km`;
+        return isToday ? `${current.wind_kph}` : `${day.maxwind_kph}`;
 
       case "visibility":
         return isToday ? `${current.vis_km} km` : `${day.avgvis_km} km`;
@@ -57,7 +57,7 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
 
   // Day theme
   let dayTheme = "bg-white/10";
-  if (weatherData?.current.is_day === 1) {
+  if (weatherData?.current.is_day === 1 || dayOffset !== 0) {
     dayTheme = "bg-black/10";
   }
 
@@ -75,7 +75,9 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
                 const Icon = info.icon;
                 return (
                   <div key={index}>
-                    <div className={`flex flex-col text-center ${dayTheme} p-4 w-25 rounded-2xl shadow`}>
+                    <div
+                      className={`flex flex-col text-center ${dayTheme} p-4 w-25 rounded-2xl shadow`}
+                    >
                       <span className="flex text-white/90 justify-center mb-2">
                         <Icon />
                       </span>
