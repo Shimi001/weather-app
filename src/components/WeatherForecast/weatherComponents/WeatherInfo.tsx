@@ -67,14 +67,14 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
         <div></div>
       ) : (
         <>
-          {isLoading ? (
-            <div className="h-30 w-full bg-gray-300/20 rounded-xl animate-pulse"></div>
-          ) : (
-            <div className="grid grid-cols-3 gap-2 mb-8">
-              {infoIcon.map((info, index) => {
-                const Icon = info.icon;
-                return (
-                  <div key={index}>
+          <div className="grid grid-cols-3 gap-2 mb-8">
+            {infoIcon.map((info, index) => {
+              const Icon = info.icon;
+              return (
+                <div key={index}>
+                  {isLoading ? (
+                    <div className="h-27 w-full bg-gray-300/20 animate-pulse rounded-2xl"></div>
+                  ) : (
                     <div
                       className={`flex flex-col text-center ${dayTheme} p-4 w-25 rounded-2xl shadow`}
                     >
@@ -88,11 +88,11 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
                         {info.label}
                       </span>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </>
       )}
     </>

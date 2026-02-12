@@ -12,7 +12,7 @@ interface HeaderProps {
 /**
  * Header component
  *
- * @returns City search and display section, settings button
+ * @returns City search
  */
 
 function Header({ weatherData, isLoading }: HeaderProps) {
@@ -62,9 +62,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
               <form
                 onSubmit={handleSearch}
                 className={`flex items-center border ${dayTheme} backdrop-blur-lg shadow px-5 py-2 gap-1 rounded-3xl w-fit max-w-42 ${
-                  options.length > 0 && isEditing
-                    ? "rounded-b-none border-b-0 shadow-none"
-                    : ""
+                  options.length > 0 && isEditing ? "" : ""
                 }`}
               >
                 <MapPinPen size={16} className="shrink-0 opacity-30" />
@@ -82,7 +80,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
               </form>
               {options.length > 0 && isEditing && (
                 <ul
-                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 border border-t-0 rounded-t-none ${dayTheme} backdrop-blur-lg w-42 rounded-3xl`}
+                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 mt-2 border ${dayTheme} backdrop-blur-lg w-42 rounded-3xl`}
                 >
                   {options.map((city) => (
                     <li
@@ -113,6 +111,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
                 <span className="text-xl font-medium">
                   {weatherData?.location?.name}
                 </span>
+                <span className="text-white/50">⌄</span>
               </button>
             </>
           )}

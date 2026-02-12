@@ -66,77 +66,57 @@ function CurrentWeather({
   }
 
   return (
-    <div className={`text-white ${dayTheme} p-8 py-9 rounded-3xl shadow mb-5`}>
+    <>
       {error ? (
         <div></div>
       ) : (
         <>
-          {/* day of the week and date */}
-          <div className="mb-8">
-            {isLoading ? (
-              <div className="h-10 w-45 mb-0.5 bg-gray-300/20 rounded-2xl animate-pulse"></div>
-            ) : (
-              <h2 className="text-5xl font-medium mb-0.5">{dayName}</h2>
-            )}
-            {isLoading ? (
-              <div className="h-7 w-35 bg-gray-300/20 rounded-xl animate-pulse"></div>
-            ) : (
-              <h2 className="text-xl font-medium text-white/60">
-                {formattedDate}
-              </h2>
-            )}
-          </div>
+          {isLoading ? (
+            <div className="h-107 w-full bg-gray-300/20 animate-pulse rounded-3xl mb-5"></div>
+          ) : (
+            <div
+              className={`text-white ${dayTheme} p-8 py-9 rounded-3xl shadow mb-5`}
+            >
+              {/* day of the week and date */}
+              <div className="mb-8">
+                <h2 className="text-5xl font-medium mb-0.5">{dayName}</h2>
+                <h2 className="text-xl font-medium text-white/60">
+                  {formattedDate}
+                </h2>
+              </div>
 
-          {/* icon */}
-          <div className="flex justify-center mb-6">
-            {isLoading ? (
-              <div className="h-14 w-14 bg-gray-300/20 rounded-full animate-pulse"></div>
-            ) : (
-              <Icon size={70} className={`${theme.text}`} />
-            )}
-          </div>
+              {/* icon */}
+              <div className="flex justify-center mb-6">
+                <Icon size={70} className={`${theme.text}`} />
+              </div>
 
-          {/* temperature */}
-          <div className="flex justify-center mb-2">
-            {isLoading ? (
-              <div className="h-14 w-14 bg-gray-300/20 rounded-xl animate-pulse"></div>
-            ) : (
-              <span className="text-6xl font-medium">
-                {Math.round(temperature ?? 0)}
-              </span>
-            )}
-          </div>
+              {/* temperature */}
+              <div className="flex justify-center mb-2">
+                <span className="text-6xl font-medium">
+                  {Math.round(temperature ?? 0)}
+                </span>
+              </div>
 
-          {/* condition */}
-          <div className="flex justify-center text-white/60 text-xl mb-6">
-            {isLoading ? (
-              <div className="h-7 w-40 bg-gray-300/20 rounded-xl animate-pulse"></div>
-            ) : (
-              <span className="font-medium">{currentCondition}</span>
-            )}
-          </div>
+              {/* condition */}
+              <div className="flex justify-center text-white/60 text-xl mb-6">
+                <span className="font-medium">{currentCondition}</span>
+              </div>
 
-          {/* temperature range */}
-          <div className="flex flex-row justify-evenly text-xl">
-            {isLoading ? (
-              <div className="h-7 w-13 bg-gray-300/20 rounded-xl animate-pulse"></div>
-            ) : (
-              <span className="flex flex-row text-white/75">
-                L {forecastDay?.day.mintemp_c}
-              </span>
-            )}
+              {/* temperature range */}
+              <div className="flex flex-row justify-evenly text-xl">
+                <span className="flex flex-row text-white/75">
+                  L {forecastDay?.day.mintemp_c}
+                </span>
 
-            {isLoading ? (
-              <div className="h-7 w-13 bg-gray-300/20 rounded-xl animate-pulse"></div>
-            ) : (
-              <span className="flex flex-row text-white/75">
-                H {forecastDay?.day.maxtemp_c}
-              </span>
-            )}
-          </div>
+                <span className="flex flex-row text-white/75">
+                  H {forecastDay?.day.maxtemp_c}
+                </span>
+              </div>
+            </div>
+          )}
         </>
       )}
-    </div>
+    </>
   );
 }
 

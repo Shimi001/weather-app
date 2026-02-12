@@ -14,7 +14,7 @@ interface ForecastScrollProps {
  * @param weatherData the full API response object
  */
 
-function ForecastScroll({ weatherData }: ForecastScrollProps) {
+function ForecastScroll({ weatherData, isLoading }: ForecastScrollProps) {
   const { dayOffset, setDayOffset } = useWeatherStore();
 
   // Get the forecast day data based on the current day offset
@@ -30,6 +30,22 @@ function ForecastScroll({ weatherData }: ForecastScrollProps) {
   let dayTheme = "bg-white/10";
   if (weatherData?.current.is_day === 1 || dayOffset !== 0) {
     dayTheme = "bg-black/10";
+  }
+
+  // Loading skeleton
+  if (isLoading) {
+    const skeletons = Array.from({ length: 3 });
+
+    return (
+      <div className="flex flex-row justify-around">
+        {skeletons.map((_, index) => (
+          <div
+            key={index}
+            className="h-43 w-23 bg-gray-300/20 animate-pulse rounded-2xl"
+          ></div>
+        ))}
+      </div>
+    );
   }
 
   return (
