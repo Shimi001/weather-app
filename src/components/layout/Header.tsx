@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MapPin, MapPinPen } from "lucide-react";
 import type WeatherData from "../../types/weatherApiForecast";
 import { useWeatherStore } from "../../store/weatherStore";
@@ -19,11 +19,35 @@ function Header({ weatherData, isLoading }: HeaderProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [cityInput, setCityInput] = useState("");
 
+  // Create a ref to the search container
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
   // Weather store variables and functions
   const { setSearchQuery, isManualSearch, dayOffset } = useWeatherStore();
   const { setDayOffset } = useWeatherStore();
 
   const options = useCitySearch(cityInput);
+
+  // Handle clicks outside the search container to close it
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsEditing(false); // Close
+        setCityInput(""); // Clear input when clicking outside
+      }
+    }
+
+    if (isEditing) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isEditing]);
 
   // Handle search form submission
   const handleSearch = (e: React.FormEvent) => {
@@ -58,7 +82,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
         // City search and display section
         <div className="text-white">
           {isEditing ? (
-            <>
+            <div ref={searchContainerRef} className="relative">
               <form
                 onSubmit={handleSearch}
                 className={`flex items-center border ${dayTheme} backdrop-blur-lg shadow px-5 py-2 gap-1 rounded-3xl w-fit max-w-42 ${
@@ -73,19 +97,17 @@ function Header({ weatherData, isLoading }: HeaderProps) {
                   placeholder={weatherData?.location?.name}
                   className="text-xl font-medium placeholder:opacity-20 outline-none focus:ring-0 min-w-0"
                   autoFocus
-                  onBlur={() => {
-                    if (!cityInput.trim()) setIsEditing(false);
-                  }}
                 />
               </form>
               {options.length > 0 && isEditing && (
                 <ul
-                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 mt-2 border ${dayTheme} backdrop-blur-lg w-42 rounded-3xl`}
+                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 mt-2 border ${dayTheme} backdrop-blur-lg w-42 rounded-3xl left-0`}
                 >
                   {options.map((city) => (
                     <li
                       key={city.id}
                       onClick={() => handleOptionClick(city.url)}
+                      className="cursor-pointer hover:opacity-70 transition-opacity"
                     >
                       <div>{city.name}</div>
                       <div className="text-xs text-white/70">
@@ -95,7 +117,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
                   ))}
                 </ul>
               )}
-            </>
+            </div>
           ) : (
             // Display current city name with edit button
             <>
