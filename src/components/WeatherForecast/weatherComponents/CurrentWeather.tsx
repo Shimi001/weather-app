@@ -79,12 +79,14 @@ function CurrentWeather({
             <div className="h-107 w-full bg-gray-300/20 animate-pulse rounded-3xl mb-5"></div>
           ) : (
             <div
-              className={`text-white ${dayTheme} p-8 py-9 rounded-3xl shadow mb-5`}
+              className={`text-white ${dayTheme} p-8 py-9 rounded-3xl shadow mb-5 transition-colors duration-1000 ease-in-out`}
             >
               {/* day of the week and date */}
               <div className="mb-8">
-                <h2 className="text-5xl font-medium mb-0.5">{dayName}</h2>
-                <h2 className="text-xl font-medium text-white/60">
+                <h2 className="text-5xl text-white font-medium mb-0.5">
+                  {dayName}
+                </h2>
+                <h2 className="text-xl text-white/60 font-medium">
                   {formattedDate}
                 </h2>
               </div>
@@ -96,7 +98,7 @@ function CurrentWeather({
 
               {/* temperature */}
               <div className="flex justify-center mb-2">
-                <span className="text-6xl font-medium">
+                <span className="text-6xl text-white font-medium">
                   {Math.round(temperature ?? 0)}
                 </span>
               </div>

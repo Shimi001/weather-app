@@ -41,7 +41,7 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col p-6 bg-linear-to-br ${theme.bg}`}
+      className={`min-h-screen flex flex-col p-6 bg-linear-to-br ${theme.bg} transition-colors duration-1000 ease-in-out`}
     >
       <Header weatherData={data ?? null} isLoading={showLoading} />
 

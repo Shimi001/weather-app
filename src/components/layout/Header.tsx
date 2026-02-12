@@ -56,6 +56,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
     if (cityInput.trim()) {
       setSearchQuery(cityInput, true);
       setIsEditing(false);
+      setDayOffset(0);
       setCityInput("");
     }
   };
@@ -123,7 +124,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
             <>
               <button
                 onClick={() => setIsEditing(true)}
-                className={`flex items-center border ${dayTheme} px-5 py-2 gap-1 rounded-3xl shadow`}
+                className={`flex items-center border ${dayTheme} px-5 py-2 gap-1 rounded-3xl shadow transition-colors duration-1000 ease-in-out`}
               >
                 {isManualSearch ? (
                   <MapPinPen size={16} className="shrink-0" />

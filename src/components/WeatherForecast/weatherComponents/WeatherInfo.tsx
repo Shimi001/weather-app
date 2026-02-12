@@ -83,7 +83,7 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
                     <div className="h-27 w-full bg-gray-300/20 animate-pulse rounded-2xl"></div>
                   ) : (
                     <div
-                      className={`flex flex-col text-center ${dayTheme} p-4 w-25 rounded-2xl shadow`}
+                      className={`flex flex-col text-center ${dayTheme} p-4 w-25 rounded-2xl shadow transition-colors duration-1000 ease-in-out`}
                     >
                       <span className="flex text-white/90 justify-center mb-2">
                         <Icon />
