@@ -41,13 +41,20 @@ function WeatherForecast({
         isLoading={showLoading}
         error={error}
       />
-      {isApiLoading ? (
-        <h2 className="text-white/70 font-bold mb-3 animate-pulse">
-          3-day forecast
-        </h2>
+      {error ? (
+        <div></div>
       ) : (
-        <h2 className="text-white/70 font-bold mb-3">3-day forecast</h2>
+        <>
+          {isApiLoading ? (
+            <h2 className="text-white/70 font-bold mb-3 animate-pulse">
+              3-day forecast
+            </h2>
+          ) : (
+            <h2 className="text-white/70 font-bold mb-3">3-day forecast</h2>
+          )}
+        </>
       )}
+
       <ForecastScroll
         weatherData={weatherData ?? null}
         isLoading={showLoading}

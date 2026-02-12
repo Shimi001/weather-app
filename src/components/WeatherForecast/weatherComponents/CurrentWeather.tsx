@@ -68,7 +68,11 @@ function CurrentWeather({
   return (
     <>
       {error ? (
-        <div></div>
+        <div
+          className={`${dayTheme} p-5 py-10 w-full rounded-3xl text-red-400 text-center text-2xl`}
+        >
+          {error.message}
+        </div>
       ) : (
         <>
           {isLoading ? (

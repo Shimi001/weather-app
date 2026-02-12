@@ -77,7 +77,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
   return (
     <header className="flex flex-row justify-between mb-6 ml-2">
       {isLoading ? (
-        <div className="h-11 w-35 bg-gray-300/20 rounded-3xl animate-pulse"></div>
+        <div className="h-11 w-40 bg-gray-300/20 rounded-3xl animate-pulse"></div>
       ) : (
         // City search and display section
         <div className="text-white">
@@ -94,7 +94,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
                   type="text"
                   value={cityInput}
                   onChange={(e) => setCityInput(e.target.value)}
-                  placeholder={weatherData?.location?.name}
+                  placeholder={weatherData?.location?.name || "City not found"}
                   className="text-xl font-medium placeholder:opacity-20 outline-none focus:ring-0 min-w-0"
                   autoFocus
                 />
@@ -131,7 +131,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
                   <MapPin size={16} className="shrink-0" />
                 )}
                 <span className="text-xl font-medium">
-                  {weatherData?.location?.name}
+                  {weatherData?.location?.name || "City not found"}
                 </span>
                 <span className="text-white/50">⌄</span>
               </button>
