@@ -99,7 +99,9 @@ function CurrentWeather({
 
               {/* condition */}
               <div className="flex justify-center text-white/60 text-xl mb-6">
-                <span className="font-medium">{currentCondition}</span>
+                <span className="font-medium text-center">
+                  {currentCondition}
+                </span>
               </div>
 
               {/* temperature range */}

@@ -31,12 +31,19 @@ function WeatherInfo({ weatherData, isLoading, error }: WeatherInfoProps) {
 
     const isToday = dayOffset === 0;
 
+    // If the value is greater than 10, round it to the nearest integer
+    const formatNumber = (num: number) => {
+      return num > 10 ? Math.round(num) : num;
+    };
+
     switch (name) {
       case "chance_of_precip":
         return `${day.daily_chance_of_rain}%`;
 
       case "precip_mm":
-        return isToday ? `${current.precip_mm} mm` : `${day.totalprecip_mm} mm`;
+        return isToday
+          ? `${formatNumber(current.precip_mm)} mm`
+          : `${formatNumber(day.totalprecip_mm)} mm`;
 
       case "humidity":
         return isToday ? `${current.humidity}%` : `${day.avghumidity}%`;
