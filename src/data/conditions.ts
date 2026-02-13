@@ -47,7 +47,7 @@ const rainConfig: Condition = {
 const snowConfig: Condition = {
   day: {
     icon: CloudSnow,
-    bg: "from-sky-300 via-sky-400 to-blue-300",
+    bg: "from-sky-400 via-sky-500 to-blue-400",
     text: "text-white",
   },
   night: {
@@ -123,7 +123,7 @@ export const weatherCondition: Record<number, Condition> = {
     day: {
       icon: Cloud,
       bg: "from-gray-300 via-gray-400 to-slate-400",
-      text: "text-slate-600",
+      text: "text-gray-500",
     },
     night: {
       icon: Cloud,
@@ -154,8 +154,8 @@ export const weatherCondition: Record<number, Condition> = {
   1030: {
     day: {
       icon: Haze,
-      bg: "from-slate-200 via-gray-300 to-slate-400",
-      text: "text-slate-700",
+      bg: "from-slate-300 via-gray-400 to-slate-400",
+      text: "text-slate-300",
     },
     night: {
       icon: CloudFog,
@@ -180,8 +180,8 @@ export const weatherCondition: Record<number, Condition> = {
   1147: {
     day: {
       icon: CloudFog,
-      bg: "from-cyan-100 via-slate-300 to-slate-400",
-      text: "text-cyan-800",
+      bg: "from-cyan-300 via-slate-400 to-slate-500",
+      text: "text-cyan-200",
     },
     night: {
       icon: CloudFog,
@@ -213,7 +213,7 @@ export const weatherCondition: Record<number, Condition> = {
     day: {
       icon: CloudDrizzle,
       bg: "from-sky-200 via-sky-300 to-blue-300",
-      text: "text-blue-700",
+      text: "text-blue-400",
     },
     night: {
       icon: CloudDrizzle,
@@ -225,7 +225,7 @@ export const weatherCondition: Record<number, Condition> = {
     day: {
       icon: CloudDrizzle,
       bg: "from-sky-200 via-sky-300 to-blue-300",
-      text: "text-blue-700",
+      text: "text-blue-400",
     },
     night: {
       icon: CloudDrizzle,

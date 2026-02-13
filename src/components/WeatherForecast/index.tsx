@@ -30,7 +30,7 @@ function WeatherForecast({
   const showLoading = isApiLoading || !searchQuery;
 
   return (
-    <main className="flex flex-col w-full">
+    <main className="flex flex-col w-full lg:grid lg:grid-cols-2">
       <CurrentWeather
         weatherData={weatherData ?? null}
         isLoading={showLoading}
@@ -41,20 +41,6 @@ function WeatherForecast({
         isLoading={showLoading}
         error={error}
       />
-      {error ? (
-        <div></div>
-      ) : (
-        <>
-          {isApiLoading ? (
-            <h2 className="text-white/70 font-bold mb-3 animate-pulse">
-              3-day forecast
-            </h2>
-          ) : (
-            <h2 className="text-white/70 font-bold mb-3">3-day forecast</h2>
-          )}
-        </>
-      )}
-
       <ForecastScroll
         weatherData={weatherData ?? null}
         isLoading={showLoading}

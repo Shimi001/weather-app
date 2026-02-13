@@ -30,18 +30,23 @@ function App() {
   // Condition
   const weather =
     dayOffset === 0
-      ? weatherCondition[data?.current.condition.code ?? 1000]
+      ? weatherCondition[data?.current.condition.code ?? 1003]
       : weatherCondition[
-          data?.forecast?.forecastday[dayOffset].day.condition.code ?? 1000
+          data?.forecast?.forecastday[dayOffset].day.condition.code ?? 1003
         ];
 
-  const isDay = data?.current.is_day;
+  // Get local day for bg loading
+  const currentHour = new Date().getHours();
+  const isLocalDay = currentHour >= 6 && currentHour < 18;
+
+  const isDay =
+    data?.current.is_day !== undefined ? data.current.is_day : isLocalDay;
   const theme =
     dayOffset === 0 ? (isDay ? weather.day : weather.night) : weather.day;
 
   return (
     <div
-      className={`min-h-screen flex flex-col p-6 bg-linear-to-br ${theme.bg} transition-colors duration-1000 ease-in-out`}
+      className={`min-h-screen flex flex-col p-6 pb-12 bg-linear-to-br ${theme.bg} transition-colors duration-1000 ease-in-out sm:px-17 sm:py-10 md:px-22 lg:px-28 xl:px-32 2xl:px-70 2xl:pt-15`}
     >
       <Header weatherData={data ?? null} isLoading={showLoading} />
 

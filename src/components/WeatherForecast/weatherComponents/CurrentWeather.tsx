@@ -76,48 +76,50 @@ function CurrentWeather({
       ) : (
         <>
           {isLoading ? (
-            <div className="h-107 w-full bg-gray-300/20 animate-pulse rounded-3xl mb-5"></div>
+            <div className="h-107 w-full bg-gray-300/20 animate-pulse rounded-3xl mb-5 lg:mb-0 xl:h-130 2xl:150"></div>
           ) : (
             <div
-              className={`text-white ${dayTheme} p-8 py-9 rounded-3xl shadow mb-5 transition-colors duration-1000 ease-in-out`}
+              className={`text-white ${dayTheme} p-8 py-9 mb-5 rounded-3xl shadow transition-colors duration-1000 ease-in-out sm:py-12 lg:mb-0 xl:py-14 xl:mx-5 2xl:mx-10 2xl:py-18 2xl:rounded-4xl`}
             >
               {/* day of the week and date */}
-              <div className="mb-8">
-                <h2 className="text-5xl text-white font-medium mb-0.5">
+              <div className="mb-8 sm:px-6 xl:mb-9 2xl:px-8">
+                <h2 className="text-5xl text-white font-medium mb-1 xl:mb-2 2xl:text-6xl">
                   {dayName}
                 </h2>
-                <h2 className="text-xl text-white/60 font-medium">
+                <h2 className="text-xl text-white/60 font-medium px-1 2xl:text-2xl">
                   {formattedDate}
                 </h2>
               </div>
 
               {/* icon */}
-              <div className="flex justify-center mb-6">
-                <Icon size={70} className={`${theme.text}`} />
+              <div className="flex justify-center mb-6 xl:mb-8 2xl:mb-10">
+                <Icon
+                  className={`${theme.text} w-18 h-18 sm:w-20 sm:h-20 xl:w-22 xl:h-22 2xl:w-26 2xl:h-26`}
+                />
               </div>
 
               {/* temperature */}
-              <div className="flex justify-center mb-2">
-                <span className="text-6xl text-white font-medium">
-                  {Math.round(temperature ?? 0)}
+              <div className="flex justify-center mb-2 xl:mb-3">
+                <span className="text-6xl text-white font-medium 2xl:text-7xl">
+                  {Math.round(temperature ?? 0)}°
                 </span>
               </div>
 
               {/* condition */}
-              <div className="flex justify-center text-white/60 text-xl mb-6">
+              <div className="flex justify-center text-white/60 text-xl mb-6 sm:mb-8 xl:mb-10 2xl:mb-16 2xl:text-2xl">
                 <span className="font-medium text-center">
                   {currentCondition}
                 </span>
               </div>
 
               {/* temperature range */}
-              <div className="flex flex-row justify-evenly text-xl">
+              <div className="flex flex-row justify-evenly text-xl xl:text-2xl">
                 <span className="flex flex-row text-white/75">
-                  L {forecastDay?.day.mintemp_c}
+                  L {forecastDay?.day.mintemp_c}°
                 </span>
 
                 <span className="flex flex-row text-white/75">
-                  H {forecastDay?.day.maxtemp_c}
+                  H {forecastDay?.day.maxtemp_c}°
                 </span>
               </div>
             </div>

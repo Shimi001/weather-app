@@ -76,7 +76,7 @@ function Header({ weatherData, isLoading }: HeaderProps) {
   }
 
   return (
-    <header className="flex flex-row justify-between mb-6 ml-2">
+    <header className="flex flex-row justify-between mb-6 px-2 lg:mb-7 2xl:px-6 2xl:mb-10">
       {isLoading ? (
         <div className="h-11 w-40 bg-gray-300/20 rounded-3xl animate-pulse"></div>
       ) : (
@@ -86,23 +86,23 @@ function Header({ weatherData, isLoading }: HeaderProps) {
             <div ref={searchContainerRef} className="relative">
               <form
                 onSubmit={handleSearch}
-                className={`flex items-center border ${dayTheme} backdrop-blur-lg shadow px-5 py-2 gap-1 rounded-3xl w-fit max-w-42 ${
+                className={`flex items-center border ${dayTheme} backdrop-blur-lg shadow-lg px-5 py-2 gap-1 rounded-3xl w-fit max-w-42 xl:max-w-49 xl:px-6 ${
                   options.length > 0 && isEditing ? "" : ""
                 }`}
               >
-                <MapPinPen size={16} className="shrink-0 opacity-30" />
+                <MapPinPen className="shrink-0 opacity-30 w-4 h-4 xl:w-5 xl:h-5" />
                 <input
                   type="text"
                   value={cityInput}
                   onChange={(e) => setCityInput(e.target.value)}
                   placeholder={weatherData?.location?.name || "City not found"}
-                  className="text-xl font-medium placeholder:opacity-20 outline-none focus:ring-0 min-w-0"
+                  className="text-xl font-medium placeholder:opacity-20 outline-none focus:ring-0 min-w-0 xl:text-2xl"
                   autoFocus
                 />
               </form>
               {options.length > 0 && isEditing && (
                 <ul
-                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 mt-2 border ${dayTheme} backdrop-blur-lg w-42 rounded-3xl left-0`}
+                  className={`absolute text-xl z-10 space-y-4 p-2 px-4 pb-5 mt-2 border ${dayTheme} backdrop-blur-lg w-42 rounded-3xl left-0 xl:text-2xl xl:w-49 xl:pb-6 xl:pt-4 xl:px-5`}
                 >
                   {options.map((city) => (
                     <li
@@ -124,22 +124,26 @@ function Header({ weatherData, isLoading }: HeaderProps) {
             <>
               <button
                 onClick={() => setIsEditing(true)}
-                className={`flex items-center border ${dayTheme} px-5 py-2 gap-1 rounded-3xl shadow transition-colors duration-1000 ease-in-out`}
+                className={`flex items-center border ${dayTheme} px-5 py-2 rounded-3xl shadow-lg transition duration-1000 ease-in-out cursor-pointer xl:px-6`}
               >
                 {isManualSearch ? (
-                  <MapPinPen size={16} className="shrink-0" />
+                  <MapPinPen className="shrink-0 mr-1 w-4 h-4 xl:w-5 xl:h-5" />
                 ) : (
-                  <MapPin size={16} className="shrink-0" />
+                  <MapPin className="shrink-0 mr-1 w-4 h-4 xl:w-5 xl:h-5" />
                 )}
-                <span className="text-xl font-medium">
+                <span className="font-medium text-xl xl:text-2xl">
                   {weatherData?.location?.name || "City not found"}
                 </span>
-                <span className="text-white/50">⌄</span>
+                <span className="text-white/50 ml-0.5">⌄</span>
               </button>
             </>
           )}
         </div>
       )}
+
+      <div className="flex text-white/60 text-2xl font-bold items-center">
+        C°
+      </div>
     </header>
   );
 }
